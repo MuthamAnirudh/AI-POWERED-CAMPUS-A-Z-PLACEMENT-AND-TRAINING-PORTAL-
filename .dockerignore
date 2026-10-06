@@ -1,0 +1,10 @@
+node_modules
+**/node_modules
+storage
+**/.venv
+**/__pycache__
+**/*.pyc
+campus/backend/.env
+.env
+.git
+*.log

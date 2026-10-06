@@ -1,0 +1,46 @@
+# Render Blueprint for the unified GovCareer + Campus Portal.
+# Uses the same PostgreSQL + Prisma schema/migrations as the P1 portal (campus/backend/prisma).
+services:
+  - type: web
+    name: govcareer-unified
+    runtime: node
+    # Root Directory: leave EMPTY (repo root contains package.json). Do NOT set it to "campus" or use a
+    # Start Command like `cd campus/backend && npm start`: that runs the Campus Portal alone, with no GovCareer AI.
+    # Also builds the FastAPI AI/ML virtualenv during the build (not on the first student request).
+    buildCommand: npm install && npx prisma generate --schema=campus/backend/prisma/schema.prisma && python3 -m venv campus/ai-ml-service/.venv && campus/ai-ml-service/.venv/bin/python -m pip install --disable-pip-version-check -r campus/ai-ml-service/requirements.txt
+    # The Campus child process runs `prisma migrate deploy` automatically on boot (AUTO_MIGRATE).
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: DIRECT_URL
+        sync: false   # Neon: the DIRECT (non "-pooler") connection string, ending in ?sslmode=require
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: PORTAL_SECRETS_ENCRYPTION_KEY
+        generateValue: true
+      - key: AI_ML_SERVICE_TOKEN
+        generateValue: true
+      - key: OPERATIONS_TOKEN
+        generateValue: true
+      - key: BRIDGE_SERVICE_SECRET
+        generateValue: true
+      - key: PORTAL_ADMIN_EMAIL
+        sync: false
+      - key: PORTAL_ADMIN_PASSWORD
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: AI_ML_AUTOINSTALL
+        value: "false"
+      - key: AI_REQUEST_TIMEOUT_MS
+        value: "20000"
+      - key: AI_ML_PROXY_TIMEOUT_MS
+        value: "50000"

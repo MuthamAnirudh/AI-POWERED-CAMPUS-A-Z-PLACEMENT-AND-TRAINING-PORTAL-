@@ -1,0 +1,34 @@
+.lj-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.lj-tab{border:1px solid var(--line,#d7dedb);background:#fff;border-radius:999px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;min-height:44px}
+.lj-tab.active{background:#0f2a2a;color:#fff;border-color:#0f2a2a}.lj-tab b{background:#9be7d0;color:#0f2a2a;border-radius:99px;padding:1px 8px;margin-left:6px;font-size:.85em}
+.lj-panel[hidden],.workspace[hidden]{display:none!important}
+.lj-status{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#eaf7f2;border:1px solid #bfe7d8;border-radius:12px;padding:10px 14px;margin-bottom:12px;font-size:.92rem}
+.lj-status.lj-bad{background:#fff3e6;border-color:#f2c48f}
+.lj-search{display:flex;gap:8px;margin-bottom:10px}.lj-search input{flex:1;min-width:0;padding:12px 14px;border:1px solid #cfd8d4;border-radius:12px;font:inherit}
+.lj-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:8px}.lj-filters select{padding:10px;border:1px solid #cfd8d4;border-radius:10px;font:inherit;min-height:44px;background:#fff}
+.lj-checks{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.lj-count{font-weight:700;margin:8px 0}
+.lj-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.lj-card{background:#fff;border:1px solid #dfe6e3;border-left:4px solid #c8d3cf;border-radius:14px;padding:14px 16px}.lj-card.is-official{border-left-color:#2fae85}
+.lj-card-top{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.lj-title{font-weight:700;font-size:1.02rem;color:#0f2a2a;text-decoration:none;overflow-wrap:anywhere}.lj-title:hover{text-decoration:underline}
+.lj-meta{color:#5b6b66;font-size:.86rem;margin:4px 0 8px}.lj-off{color:#1b7f5f}
+.lj-chips{display:flex;flex-wrap:wrap;gap:6px}.lj-chip{background:#eef2f0;border-radius:99px;padding:3px 10px;font-size:.78rem;font-weight:600}
+.lj-chip.lj-new{background:#0f2a2a;color:#9be7d0}.lj-chip.lj-urgent{background:#fde8c8;color:#8a5200}.lj-chip.lj-closed{background:#eee;color:#777}.lj-chip.lj-q{background:#e4eefc;color:#1d4f91}.lj-chip.lj-unv{background:#fff7d6;color:#6b5600}
+.lj-sum{font-size:.88rem;color:#44524e;margin:8px 0 0}
+.lj-foot{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:#5b6b66;margin-top:10px;align-items:center}.lj-foot a{color:#1b6f58}.lj-open{margin-left:auto;font-weight:700}
+.lj-empty{padding:24px;text-align:center;color:#5b6b66;background:#fff;border:1px dashed #cfd8d4;border-radius:14px}
+.lj-pager{display:flex;gap:12px;align-items:center;justify-content:center;margin:16px 0}.lj-pager button{border:1px solid #cfd8d4;background:#fff;border-radius:10px;padding:10px 14px;min-height:44px;font:inherit;cursor:pointer}.lj-pager button:disabled{opacity:.4;cursor:default}
+.lj-sources{margin:10px 0}.lj-src{display:inline-block;margin:3px;padding:3px 9px;border-radius:99px;font-size:.76rem;background:#eee}.lj-src.ok{background:#dff5ea}.lj-src.bad{background:#fde3e3}.lj-src.wait{background:#fff3cc}
+.lj-note{font-size:.82rem;color:#5b6b66;margin-top:12px}
+@media (max-width:640px){.lj-search{flex-direction:column}.lj-open{margin-left:0}}
+@media (prefers-color-scheme:dark){.lj-card,.lj-tab,.lj-filters select,.lj-search input,.lj-pager button,.lj-empty{background:#13201f;color:#e8f1ee;border-color:#2b3d3a}.lj-title{color:#e8f1ee}.lj-chip{background:#223230;color:#e8f1ee}.lj-status{background:#10302a;border-color:#245a4c;color:#e8f1ee}.lj-tab.active{background:#9be7d0;color:#0f2a2a}}
+
+/* v2.7 mobile navigation: the original top nav is hidden under 1050px, so show it as a scrollable bottom bar. */
+@media (max-width:1050px){
+  .top-nav{display:flex!important;position:fixed;left:0;right:0;bottom:0;z-index:40;justify-content:flex-start;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;background:#071b1b;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid #1f3a39;flex:none}
+  .top-nav::-webkit-scrollbar{display:none}
+  .top-nav .nav-btn{flex:0 0 auto;white-space:nowrap;min-height:44px;color:#a9c0bf;text-decoration:none;display:inline-flex;align-items:center}
+  .top-nav .nav-btn.active{background:#143332;color:#fff}
+  body{padding-bottom:64px}
+}

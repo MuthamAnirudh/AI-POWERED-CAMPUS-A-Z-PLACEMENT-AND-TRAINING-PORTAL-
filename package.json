@@ -1,0 +1,56 @@
+{
+  "name": "govcareer-unified",
+  "version": "2.9.2",
+  "private": true,
+  "description": "GovCareer AI unified with the P1 AI/ML Campus Portal feature set and the Advanced Strategy Suite + real-time Live Jobs feed",
+  "main": "server.js",
+  "scripts": {
+    "start": "node start.js",
+    "worker": "node worker.js",
+    "dev": "node server.js",
+    "migrate": "node -e \"require('./lib/db').migrate().then(()=>process.exit(0))\"",
+    "campus:prisma:generate": "prisma generate --schema=campus/backend/prisma/schema.prisma",
+    "campus:prisma:deploy": "prisma migrate deploy --schema=campus/backend/prisma/schema.prisma",
+    "test": "node test.js && node test-livejobs.js && node test-phase3.js && node test-phase2.js && node test-phase4.js && node test-phase4-behavior.js && node test-phase5.js && node test-phase5-behavior.js && node test-phase6.js && node test-bridge.js && node test-bridge-v28.js && node test-deploy.js && node test-embed.js && node test-account.js && node test-realtime.js && node test-advanced.js && node test-advanced-ui.js && node --check server.js && node --check campus/backend/server.js",
+    "check": "node --check server.js && node --check worker.js && node --check public/app.js && node --check public/live.js && node --check public/advanced.js && node --check public/jobsplus.js && node --check public/livejobs.js && node --check lib/liveJobs.js && node --check start.js && node --check scripts/gen-secrets.js && node --check lib/advanced/index.js && node --check lib/realtime.js && node --check lib/sso.js && node --check lib/bridge/insight.js && node --check public/bridge.js && node --check campus/backend/server.js && node test-ui.js",
+    "samples": "node scripts/make-sample-pdfs.js",
+    "create-admin": "node scripts/create-admin.js",
+    "benchmark:extraction": "node scripts/benchmark-extraction.js",
+    "load": "node scripts/load-test.js",
+    "wcag": "node scripts/wcag-audit.js",
+    "standalone": "node standalone.js",
+    "start:standalone": "node standalone.js",
+    "setup": "node scripts/unified-setup.js",
+    "test:db:setup": "bash scripts/setup-test-db.sh",
+    "test:account": "node test-account.js",
+    "test:bridge": "node test-bridge.js && node test-bridge-v28.js",
+    "test:bridge:browser": "node scripts/bridge-browser-check.js",
+    "test:realtime": "node test-realtime.js",
+    "test:advanced": "node test-advanced.js && node test-advanced-ui.js",
+    "postinstall": "node -e \"try{require('child_process').execSync('npx prisma generate --schema=campus/backend/prisma/schema.prisma',{stdio:'inherit'})}catch(e){console.warn('prisma generate skipped')}\"",
+    "start:full": "node server.js",
+    "test:livejobs": "node test-livejobs.js",
+    "test:embed": "node test-embed.js",
+    "secrets": "node scripts/gen-secrets.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pdfkit": "^0.20.2",
+    "pg": "^8.23.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express-rate-limit": "^7.4.0",
+    "@prisma/client": "^5.20.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cookie-parser": "^1.4.7",
+    "@vladmandic/face-api": "^1.7.13",
+    "prisma": "^5.20.0"
+  },
+  "devDependencies": {
+    "jsdom": "^30.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

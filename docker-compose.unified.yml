@@ -1,0 +1,47 @@
+# Full stack: PostgreSQL + GovCareer + Campus Portal + AI/ML service (all inside the `app` image).
+# 1) node scripts/gen-secrets.js        -> writes .env with fresh random secrets (never commit it)
+# 2) docker compose -f docker-compose.unified.yml up --build
+# Open http://localhost:3000/  (GovCareer)   and   http://localhost:3000/campus/  (Campus Portal)
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: govcareer
+      POSTGRES_PASSWORD: govcareer
+      POSTGRES_DB: govcareer
+    volumes:
+      - govcareer_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U govcareer -d govcareer"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      CAMPUS_PORT: 3101
+      DATABASE_URL: postgres://govcareer:govcareer@postgres:5432/govcareer
+      DB_CONNECTION_TIMEOUT_MS: 3000
+      AUTO_MIGRATE: "true"
+      # Campus refuses to boot in production without these (campus/backend/src/config). They come from .env.
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?run node scripts/gen-secrets.js first}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:?run node scripts/gen-secrets.js first}
+      PORTAL_SECRETS_ENCRYPTION_KEY: ${PORTAL_SECRETS_ENCRYPTION_KEY:?run node scripts/gen-secrets.js first}
+      AI_ML_SERVICE_TOKEN: ${AI_ML_SERVICE_TOKEN:?run node scripts/gen-secrets.js first}
+      OPERATIONS_TOKEN: ${OPERATIONS_TOKEN:?run node scripts/gen-secrets.js first}
+      BRIDGE_SERVICE_SECRET: ${BRIDGE_SERVICE_SECRET:?run node scripts/gen-secrets.js first}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
+      PORTAL_ADMIN_EMAIL: ${PORTAL_ADMIN_EMAIL:-}
+      PORTAL_ADMIN_PASSWORD: ${PORTAL_ADMIN_PASSWORD:-}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      AI_ML_AUTOSTART: "true"
+    depends_on:
+      postgres:
+        condition: service_healthy
+volumes:
+  govcareer_pg:

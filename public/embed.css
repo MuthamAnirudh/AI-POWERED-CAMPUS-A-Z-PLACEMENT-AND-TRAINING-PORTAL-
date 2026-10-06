@@ -1,0 +1,5 @@
+/* Embedded inside the Campus portal: hide the link back to Campus (we are already in it) and the skip link
+   duplicate, and let the header scroll away so the content gets the full frame. */
+html.is-embedded a.nav-btn[href="/campus/"]{display:none}
+html.is-embedded .shell-header{position:static}
+html.is-embedded body{min-height:0}
